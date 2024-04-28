@@ -1,0 +1,81 @@
+// Callback function for the "List" button
+void on_list_button_clicked(GtkWidget* button, gpointer user_data) {
+    // Code to list files/directories
+    // Implement the listFiles() functionality here
+    g_print("List button clicked.\n");
+}
+
+// Callback function for the "Change Permissions" button
+void on_permissions_button_clicked(GtkWidget* button, gpointer user_data) {
+    // Code to change permissions of files
+    // Implement the changeFilePermissions() functionality here
+    g_print("Change Permissions button clicked.\n");
+}
+
+// Callback function for the "Create/Delete" button
+void on_create_delete_button_clicked(GtkWidget* button, gpointer user_data) {
+    // Code to create/delete files/directories
+    // Implement the createDirectory() and deleteFile() functionalities here
+    g_print("Create/Delete button clicked.\n");
+}
+
+// Callback function for the "Create Symbolic Link" button
+void on_symbolic_link_button_clicked(GtkWidget* button, gpointer user_data) {
+    // Code to create symbolic link files
+    // Implement the createSymbolicLink() functionality here
+    g_print("Create Symbolic Link button clicked.\n");
+}
+
+// Callback function for the main window's destroy event
+void on_window_destroy(GtkWidget* widget, gpointer user_data) {
+    gtk_main_quit();
+}
+
+int main(int argc, char* argv[]) {
+    // Initialize GTK
+    gtk_init(&argc, &argv);
+
+    // Create the main window
+    GtkWidget* window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
+    gtk_window_set_title(GTK_WINDOW(window), "File Manager");
+    gtk_container_set_border_width(GTK_CONTAINER(window), 10);
+
+    // Connect the main window's destroy event to the callback function
+    g_signal_connect(window, "destroy", G_CALLBACK(on_window_destroy), NULL);
+
+    // Create a vertical box container
+    GtkWidget* vbox = gtk_box_new(GTK_ORIENTATION_VERTICAL, 5);
+    gtk_container_add(GTK_CONTAINER(window), vbox);
+
+    // Create an entry field for the directory path
+    GtkWidget* path_entry = gtk_entry_new();
+    gtk_box_pack_start(GTK_BOX(vbox), path_entry, FALSE, FALSE, 0);
+
+    // Create a list button
+    GtkWidget* list_button = gtk_button_new_with_label("List");
+    g_signal_connect(list_button, "clicked", G_CALLBACK(on_list_button_clicked), NULL);
+    gtk_box_pack_start(GTK_BOX(vbox), list_button, FALSE, FALSE, 0);
+
+    // Create a change permissions button
+    GtkWidget* permissions_button = gtk_button_new_with_label("Change Permissions");
+    g_signal_connect(permissions_button, "clicked", G_CALLBACK(on_permissions_button_clicked), NULL);
+    gtk_box_pack_start(GTK_BOX(vbox), permissions_button, FALSE, FALSE, 0);
+
+    // Create a create/delete button
+    GtkWidget* create_delete_button = gtk_button_new_with_label("Create/Delete");
+    g_signal_connect(create_delete_button, "clicked", G_CALLBACK(on_create_delete_button_clicked), NULL);
+    gtk_box_pack_start(GTK_BOX(vbox), create_delete_button, FALSE, FALSE, 0);
+
+    // Create a create symbolic link button
+    GtkWidget* symbolic_link_button = gtk_button_new_with_label("Create Symbolic Link");
+    g_signal_connect(symbolic_link_button, "clicked", G_CALLBACK(on_symbolic_link_button_clicked), NULL);
+    gtk_box_pack_start(GTK_BOX(vbox), symbolic_link_button, FALSE, FALSE, 0);
+
+    // Show all the widgets
+    gtk_widget_show_all(window);
+
+    // Start the GTK main loop
+    gtk_main();
+
+    return 0;
+}
